@@ -4,7 +4,7 @@ provider "aws" {
 
 
 resource "aws_key_pair" "demo" {
-  key_name = "key-1"
+  key_name = "id_rsa"
   public_key = file("/home/ubuntu/.ssh/id_rsa.pub")
 }
 
@@ -78,7 +78,7 @@ resource "aws_security_group" "instance_sg" {
 resource "aws_instance" "ec2_instance" {
   ami           = "ami-03f4878755434977f"
   instance_type = "t2.micro"
-  key_name = "key-1"
+  key_name = "id_rsa"
   vpc_security_group_ids = [aws_security_group.instance_sg.id]
   subnet_id = aws_subnet.subnet_az1.id
 
