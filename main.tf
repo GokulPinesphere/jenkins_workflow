@@ -5,7 +5,7 @@ provider "aws" {
 
 resource "aws_key_pair" "demo" {
   key_name = "key-1"
-  public_key = file("F:/Terraform/Keys/key-1.pub")
+  public_key = file("/home/ubuntu/.ssh/id_rsa.pub")
 }
 
 resource "aws_vpc" "My-VPC-AWS-vpc" {
@@ -86,7 +86,7 @@ resource "aws_instance" "ec2_instance" {
     connection {
         type        = "ssh"
         user        = "ubuntu" 
-        private_key = file("F:/Terraform/Keys/key-1")
+        private_key = file("/home/ubuntu/.ssh/id_rsa")
         host        = self.public_ip
     }
 
@@ -105,7 +105,7 @@ resource "aws_instance" "ec2_instance" {
     }
 # Provisioner to copy and deploy WAR file
     provisioner "file" {
-      source      = "C:/Users/vasan/Downloads/sample.war"  # Path to your WAR file
+      source      = "/home/ubuntu/warfile/jenkins_workflow/sample.war"  # Path to your WAR file
       destination = "/opt/tomcat9/webapps/sample.war"    # Destination path in Tomcat
     }
      
