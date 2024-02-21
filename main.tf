@@ -67,6 +67,12 @@ resource "aws_security_group" "instance_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+   ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress{
     from_port   = 0
     to_port     = 0
@@ -92,14 +98,12 @@ resource "aws_instance" "ec2_instance" {
 
     provisioner "remote-exec" {
       inline = [ 
-        "sudo apt update -y",
-        "sudo apt-get install -y python3-pip",
-        "sudo apt --fix-broken install",
-        "sudo apt update -y",
-        "sudo apt install -y openjdk-17-jdk",
-        "wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz",
-        "tar -xvzf apache-tomcat-9.0.85.tar.gz",
-        "sudo mv apache-tomcat-9.0.85 /opt/tomcat9"
+      "sudo apt update -y",
+      "sudo apt install -y openjdk-17-jdk",
+      "wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz",
+      "tar -xvzf apache-tomcat-9.0.85.tar.gz",
+      "sudo mv apache-tomcat-9.0.85 /opt/tomcat9",
+      "sudo /opt/tomcat9/bin/startup.sh"
       ]
       
     }
